@@ -1,59 +1,33 @@
-import React, { Component } from "react"
+import React from "react"
+import classes from './Products.css'
 
-class Products extends Component {
-
-
-
-    state = {
-        products: []
-    }
+const Products = (props) => {
 
 
-    async getproducts() {
+    // console.log("loaded")
+    return (
 
-        const resp = await fetch('https://fortnite-api.theapinetwork.com/store/get', { headers: { Authorization: "74f075ada0b32aba1091ffcf4114bbc2" } })
-            .catch((err) => {
-                console.log("Error", err)
-            })
-        const jsonData = await resp.json()
-        console.log(jsonData)
-        this.setState({ products: jsonData.data })
-    }
+        <div className="container">
+            <div className="row equal">
 
-    componentDidMount() {
+                {props.products.map((product) => (
 
-        this.getproducts()
-
-    }
-
-
-    render() {
-        return (
-
-            <div className="container">
-                <div className="row  mt-4">
-
-                    {this.state.products.map((product) => (
-
-                        <div key={product.itemId} className="col-sm-3">
-                            <button className="card mt-4">
-                                <div className="card-body">
-                                    <img className="card-img-top" src={product.item.images.background} />
-                                    <h6 className="card-title">{product.item.name}</h6>
-                                    <p className="card-text"></p>
-                                </div>
-                            </button>
-                        </div>
-                    ))}
-
-                </div>
+                    <div key={product.itemId} className="col-sm-3 d-flex pb-3">
+                        <button className="card-block mt-4 " onClick={props.productSelected.bind(null,{product})}>
+                            <div className="card-body">
+                                <img className="card-img-top" src={product.item.images.background} />
+                                <h6 className="card-title">{product.item.name}</h6>
+                                <p className="card-text"></p>
+                            </div>
+                        </button>
+                    </div>
+                ))}
 
             </div>
 
-        )
-    }
+        </div>
 
-
+    )
 }
 
 
